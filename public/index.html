@@ -248,20 +248,34 @@
       left: -30px;
     }
 
-    /* Print / PDF mode */
+    /* Print / PDF mode — 1px screen = 1mm print (700px → 70cm) */
     @media print {
-      body { padding: 0; background: white; }
+      body { padding: 0; margin: 0; background: white; }
       .board {
         box-shadow: none;
+        border-radius: 0;
         width: 70cm;
         height: 100cm;
-        border-radius: 0;
         padding: 5cm 4.5cm 4cm;
       }
-      .headline { font-size: 6.2cm; }
-      .subtitle { font-size: 1.7cm; }
-      .bullet-title { font-size: 2.2cm; }
+      .logo-area { margin-bottom: 4cm; }
+      .logo-area svg { width: 22cm; }
+      .headline { font-size: 5.8cm; line-height: 1.1; margin-bottom: 2cm; max-width: 60cm; }
+      .subtitle { font-size: 1.7cm; line-height: 1.6; margin-bottom: 4cm; max-width: 52cm; }
+      .divider { width: 6cm; height: 0.4cm; margin-bottom: 3.5cm; }
+      .section-label { font-size: 1.3cm; letter-spacing: 0.3cm; margin-bottom: 2cm; }
+      .bullets { gap: 1.6cm; }
+      .bullets li { gap: 1.4cm; }
+      .bullet-dot { width: 1cm; height: 1cm; min-width: 1cm; margin-top: 0.6cm; }
+      .bullet-title { font-size: 2.1cm; }
       .bullet-desc { font-size: 1.35cm; }
+      .footer { padding-top: 3cm; }
+      .footer-url { font-size: 2cm; }
+      .footer-email { font-size: 1.3cm; }
+      .footer-tagline { font-size: 1.1cm; max-width: 20cm; }
+      .deco-circle.c1 { width: 30cm; height: 30cm; top: -8cm; right: -6cm; }
+      .deco-circle.c2 { width: 25cm; height: 25cm; bottom: 10cm; right: -4cm; }
+      .deco-circle.c3 { width: 20cm; height: 20cm; bottom: -5cm; left: -3cm; }
     }
 
     /* Responsive — show as scaled on small screens */
