@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yobedoo — Mingeltavla 70x100</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <style>
+    /* Reset */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* Fonts — Zuume Black approximation via condensed bold + Avenir/system */
+    @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@300;400;500&display=swap');
+
+    :root {
+      --mint: #64ffd6;
+      --navy: #141451;
+      --purple: #a55bfc;
+      --blue: #9fd6ff;
+      --gray: #C6C8C6;
+      --white: #ffffff;
+      /* Board = 70x100 cm, ratio 7:10 */
+      --board-w: 700px;
+      --board-h: 1000px;
+    }
+
+    body {
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px;
+      font-family: 'Inter', -apple-system, sans-serif;
+    }
+
+    /* Board container — exact 7:10 ratio */
+    .board {
+      width: var(--board-w);
+      height: var(--board-h);
+      background: linear-gradient(170deg, var(--mint) 0%, #c4e8ff 25%, var(--white) 50%, #e8d4ff 80%, #d4bbff 100%);
+      border-radius: 4px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 50px 45px 40px;
+    }
+
+    /* Subtle gradient overlay at top */
+    .board::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: linear-gradient(180deg, rgba(100, 255, 214, 0.25) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Logo */
+    .logo-area {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 40px;
+    }
+    .logo-area svg {
+      width: 220px;
+      height: auto;
+    }
+
+    /* Main headline */
+    .headline {
+      position: relative;
+      z-index: 1;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 62px;
+      line-height: 1.05;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+      max-width: 580px;
+    }
+
+    /* Subtitle */
+    .subtitle {
+      position: relative;
+      z-index: 1;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--navy);
+      opacity: 0.8;
+      margin-bottom: 45px;
+      max-width: 520px;
+    }
+
+    /* Divider line */
+    .divider {
+      width: 60px;
+      height: 4px;
+      background: var(--mint);
+      border-radius: 2px;
+      margin-bottom: 35px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Section label */
+    .section-label {
+      position: relative;
+      z-index: 1;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--navy);
+      opacity: 0.5;
+      margin-bottom: 20px;
+    }
+
+    /* Bullets */
+    .bullets {
+      position: relative;
+      z-index: 1;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex-grow: 1;
+    }
+
+    .bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .bullet-dot {
+      width: 10px;
+      height: 10px;
+      min-width: 10px;
+      border-radius: 50%;
+      background: var(--mint);
+      margin-top: 6px;
+      box-shadow: 0 0 8px rgba(100, 255, 214, 0.4);
+    }
+
+    .bullet-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .bullet-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .bullet-desc {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 13.5px;
+      color: var(--navy);
+      opacity: 0.65;
+      line-height: 1.4;
+    }
+
+    /* Footer area */
+    .footer {
+      position: relative;
+      z-index: 1;
+      margin-top: auto;
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .footer-url {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--navy);
+      letter-spacing: 0.5px;
+    }
+
+    .footer-email {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--navy);
+      opacity: 0.6;
+    }
+
+    .footer-tagline {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      color: var(--navy);
+      opacity: 0.4;
+      text-align: right;
+      max-width: 200px;
+      line-height: 1.4;
+    }
+
+    /* Decorative element — subtle circle */
+    .deco-circle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .deco-circle.c1 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(100,255,214,0.15) 0%, transparent 70%);
+      top: -80px;
+      right: -60px;
+    }
+    .deco-circle.c2 {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(165,91,252,0.1) 0%, transparent 70%);
+      bottom: 100px;
+      right: -40px;
+    }
+    .deco-circle.c3 {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(159,214,255,0.15) 0%, transparent 70%);
+      bottom: -50px;
+      left: -30px;
+    }
+
+    /* Print / PDF mode */
+    @media print {
+      body { padding: 0; background: white; }
+      .board {
+        box-shadow: none;
+        width: 70cm;
+        height: 100cm;
+        border-radius: 0;
+        padding: 5cm 4.5cm 4cm;
+      }
+      .headline { font-size: 6.2cm; }
+      .subtitle { font-size: 1.7cm; }
+      .bullet-title { font-size: 2.2cm; }
+      .bullet-desc { font-size: 1.35cm; }
+    }
+
+    /* Responsive — show as scaled on small screens */
+    @media (max-width: 760px) {
+      body { padding: 10px; }
+      .board {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 7/10;
+        padding: 7vw 6.5vw 5.5vw;
+      }
+      .headline { font-size: 8.5vw; }
+      .subtitle { font-size: 2.4vw; }
+      .section-label { font-size: 1.8vw; }
+      .bullet-title { font-size: 3.1vw; }
+      .bullet-desc { font-size: 1.9vw; }
+      .bullet-dot { width: 1.4vw; height: 1.4vw; min-width: 1.4vw; margin-top: 0.8vw; }
+      .bullets { gap: 2.2vw; }
+      .divider { width: 8vw; height: 0.5vw; margin-bottom: 4.5vw; }
+      .logo-area svg { width: 30vw; }
+      .footer-url { font-size: 2.8vw; }
+      .footer-email { font-size: 1.8vw; }
+      .footer-tagline { font-size: 1.5vw; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="board">
+  <!-- Decorative circles -->
+  <div class="deco-circle c1"></div>
+  <div class="deco-circle c2"></div>
+  <div class="deco-circle c3"></div>
+
+  <!-- Logo -->
+  <div class="logo-area">
+    <svg viewBox="0 0 1366 768" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#141451" d="M163.67,413.82l-39.61-174.38h62.2l5.92,75.9v33.32h5.18v-33.32l5.92-75.9h59.24l-39.61,174.38v84.78h-59.24v-84.78Z"/>
+      <path fill="#141451" d="M281.1,443.81v-149.57c0-35.54,25.92-59.24,64.79-59.24s64.79,23.69,64.79,59.24v149.57c0,35.54-25.92,59.24-64.79,59.24s-64.79-23.69-64.79-59.24ZM351.45,443.81v-149.57c0-3.33-2.22-5.55-5.55-5.55s-5.55,2.22-5.55,5.55v149.57c0,3.33,2.22,5.55,5.55,5.55s5.55-2.22,5.55-5.55Z"/>
+      <path fill="#141451" d="M446.48,239.44h72.19c34.43,0,57.39,20.73,57.39,51.83v33.69c0,14.81-7.04,31.47-21.1,38.13v2.22c14.44,6.66,22.58,24.07,22.58,39.25v42.21c0,31.1-22.96,51.83-57.39,51.83h-73.68V239.44ZM505.71,293.12v48.87h5.55c3.33,0,5.55-2.22,5.55-5.55v-37.76c0-3.33-2.22-5.55-5.55-5.55h-5.55ZM505.71,391.97v52.94h7.03c3.33,0,5.55-2.22,5.55-5.55v-41.84c0-3.33-2.22-5.55-5.55-5.55h-7.03Z"/>
+      <path fill="#141451" d="M617.89,239.44h92.56v53.68h-33.32v48.13h29.62v51.83h-29.62v51.83h33.32v53.68h-92.56V239.44Z"/>
+      <path fill="#141451" d="M758.52,239.44h68.49c36.65,0,61.09,22.21,61.09,55.53v148.09c0,33.32-24.44,55.53-61.09,55.53h-68.49V239.44ZM817.76,293.12v151.79h5.55c3.33,0,5.55-2.22,5.55-5.55v-140.69c0-3.33-2.22-5.55-5.55-5.55h-5.55Z"/>
+      <path fill="#141451" d="M924.63,443.81v-149.57c0-35.54,25.92-59.24,64.79-59.24s64.79,23.69,64.79,59.24v149.57c0,35.54-25.92,59.24-64.79,59.24s-64.79-23.69-64.79-59.24ZM994.98,443.81v-149.57c0-3.33-2.22-5.55-5.55-5.55s-5.55,2.22-5.55,5.55v149.57c0,3.33,2.22,5.55,5.55,5.55s5.55-2.22,5.55-5.55Z"/>
+      <path fill="#141451" d="M1090.74,443.81v-149.57c0-35.54,25.92-59.24,64.79-59.24s64.79,23.69,64.79,59.24v149.57c0,35.54-25.92,59.24-64.79,59.24s-64.79-23.69-64.79-59.24ZM1161.09,443.81v-149.57c0-3.33-2.22-5.55-5.55-5.55s-5.55,2.22-5.55,5.55v149.57c0,3.33,2.22,5.55,5.55,5.55s5.55-2.22,5.55-5.55Z"/>
+    </svg>
+  </div>
+
+  <!-- Headline -->
+  <h1 class="headline">Du behöver inte göra allt själv.</h1>
+
+  <!-- Subtitle -->
+  <p class="subtitle">
+    Oavsett om du är nytt startup eller etablerat bolag som har kört fast
+    — vi ger dig teamet, erfarenheten och kraften att komma vidare.
+  </p>
+
+  <!-- Divider -->
+  <div class="divider"></div>
+
+  <!-- Section label -->
+  <div class="section-label">Vi hjälper dig med</div>
+
+  <!-- Bullets -->
+  <ul class="bullets">
+    <li>
+      <div class="bullet-dot"></div>
+      <div class="bullet-content">
+        <span class="bullet-title">Strategi & riktning</span>
+        <span class="bullet-desc">Vi skapar tydliga färdplaner när vägen framåt är oklar</span>
+      </div>
+    </li>
+    <li>
+      <div class="bullet-dot"></div>
+      <div class="bullet-content">
+        <span class="bullet-title">Ledarskap & förändring</span>
+        <span class="bullet-desc">Interim CEO, COO, CMO, CFO, CCO — vi kompletterar er ledning</span>
+      </div>
+    </li>
+    <li>
+      <div class="bullet-dot"></div>
+      <div class="bullet-content">
+        <span class="bullet-title">Innovation & nya affärer</span>
+        <span class="bullet-desc">Från affärsidé till lansering — koncept, varumärke, marknadsvalidering</span>
+      </div>
+    </li>
+    <li>
+      <div class="bullet-dot"></div>
+      <div class="bullet-content">
+        <span class="bullet-title">Expansion & tillväxt</span>
+        <span class="bullet-desc">Skala hållbart, nå nya marknader, öppna nya intäktsströmmar</span>
+      </div>
+    </li>
+    <li>
+      <div class="bullet-dot"></div>
+      <div class="bullet-content">
+        <span class="bullet-title">Varumärke & kommunikation</span>
+        <span class="bullet-desc">Vi bygger det som berör, syns och säljer</span>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-left">
+      <span class="footer-url">yobedoo.com</span>
+      <span class="footer-email">hej@yobedoo.com</span>
+    </div>
+    <div class="footer-tagline">
+      Accelerator för tillväxt och transformation — med både hjärta och skärpa.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
